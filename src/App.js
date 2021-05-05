@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/signin">
+          <h2>Soon be the sign in page</h2>
+        </Route>
+        <Route path="/signup">
+          <h2>Soon be the sign up page</h2>
+        </Route>
+        <Route path="/browse">
+          <h2>Soon be the browse page</h2>
+        </Route>
+        <Route path="/">
+          <h2>Soon to be home page of the Netflix Clone</h2>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
