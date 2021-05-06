@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 
 import './App.css';
+import Home from './pages/home';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <h2>Soon be the browse page</h2>
         </Route>
         <Route path="/">
-          <h2>Soon to be home page of the Netflix Clone</h2>
+          <Home />
         </Route>
       </Switch>
     </Router>
