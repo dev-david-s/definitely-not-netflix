@@ -70,7 +70,7 @@ export const Body = styled.div`
     user-select: none;
     align-items: center;
     min-width: 100%;
-    max-width: 680px;
+    max-width: 676px;
 
     @media (max-width: 600px) {
         font-size: 16px;
