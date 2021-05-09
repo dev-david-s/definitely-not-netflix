@@ -7,6 +7,7 @@ import { FirebaseContext } from './context/firebase';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// import { seedDatabase } from './seed';
 const config = {
   apiKey: "AIzaSyBbwx87qE3kaPw8imQNCAM49PyYz_wbnuA",
   authDomain: "netflix-clone-acc57.firebaseapp.com",
@@ -17,7 +18,7 @@ const config = {
 }
 
 const firebase = window.firebase.initializeApp(config);
-
+// seedDatabase(firebase)
 ReactDOM.render(
   <React.StrictMode>
     <FirebaseContext.Provider value={{ firebase: window.firebase }}>
