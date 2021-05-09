@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 
-import Home from './pages/home';
+import { Home, Signin } from './pages';
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path={ROUTES.SIGN_IN}>
-          <h2>Soon be the sign in page</h2>
+          <Signin />
         </Route>
         <Route path={ROUTES.SIGN_UP}>
           <h2>Soon be the sign up page</h2>
