@@ -16,6 +16,22 @@ export default function Signup() {
 
     const isInvalid = firstName === '' || password === '' || emailAddress === '';
 
+    const bypassSignin = (event) => {
+        event.preventDefault()
+
+        firebase
+            .auth()
+            .signInWithEmailAndPassword("test@gmail.com", "123456")
+            .then(() => {
+                history.push(ROUTES.BROWSE)
+            })
+            .catch((err) => {
+                setEmailAddress("")
+                setPassword("")
+                setError(err.message)
+            })
+    }
+
     const handleSignup = (event) => {
         event.preventDefault();
 
@@ -29,12 +45,14 @@ export default function Signup() {
                         photoURL: Math.floor(Math.random() * 5) + 1,
                     })
                     .then(() => {
-                        setEmailAddress('');
-                        setPassword('');
-                        setError('');
                         history.push(ROUTES.BROWSE);
                     })
-            ).catch((error) => setError(error.message));
+            ).catch((error) => {
+                setEmailAddress('');
+                setPassword('');
+                setError('');
+                setError(error.message);
+            });
     }
 
     return (
@@ -70,8 +88,15 @@ export default function Signup() {
                             Already a user? <Form.Link to="/signin">Sign in now.</Form.Link>
                         </Form.Text>
                         <Form.TextSmall>
-                            This page is protected by Google reCAPTCHA.
+                            This page is protected by Google reCAPTCHA to ensure you're not a bot.
                         </Form.TextSmall>
+                        <Form.TextSmall>
+                            Authentication provided through Firebase, but email verification has been turned off.
+                            You can register with an arbitrary email or click below to bypass authentication.
+                         </Form.TextSmall>
+                        <Form.Submit onClick={bypassSignin}>
+                            Skip Sign In
+                        </Form.Submit>
                     </Form.Base>
                 </Form>
             </HeaderContainer>

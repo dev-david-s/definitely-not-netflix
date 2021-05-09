@@ -45,12 +45,12 @@ export const Link = styled.p`
 export const ButtonLink = styled(ReactRouterLink)`
     display: block;
     background-color: #e50914;
-    width: 84px;
     height: fit-content;
     color: white;
     border: 0;
     font-size: 15px;
     border-radius: 3px;
+    margin-right: 40px;
     padding: 8px 17px;
     cursor: pointer;
     text-decoration: none;
@@ -58,6 +58,29 @@ export const ButtonLink = styled(ReactRouterLink)`
 
     &:hover {
         background: #f40612;
+    }
+`;
+
+export const Group = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ButtonGit = styled.a`
+    display: block;
+    background-color: #e50914;
+    border-radius: 3px;
+    color: white;
+    height: fit-content;
+    border: 0;
+    font-size: 15px;
+    padding: 8px 17px;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+
+    &:hover {
+    background: #f40612;
     }
 `;
 
@@ -70,11 +93,6 @@ export const Logo = styled.img`
         height: 45px;
         width: 167px;
     }
-`;
-
-export const Group = styled.div`
-    display: flex;
-    align-items: center;
 `;
 
 export const Text = styled.p`

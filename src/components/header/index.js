@@ -12,6 +12,7 @@ import {
     FeatureCallOut,
     PlayButton,
     Search,
+    ButtonGit,
     SearchIcon,
     SearchInput,
     Profile,
@@ -69,6 +70,10 @@ Header.ButtonLink = function HeaderButtonLink({ children, ...restProps }) {
     return <ButtonLink {...restProps}>{children}</ButtonLink>;
 }
 
+Header.ButtonGit = function HeaderButtonGit({ children, ...restProps }) {
+    return <ButtonGit {...restProps}>{children}</ButtonGit>;
+}
+
 Header.Feature = function HeaderFeature({ children, ...restProps }) {
     return <Feature {...restProps}>{children}</Feature>
 }
@@ -78,7 +83,7 @@ Header.FeatureCallOut = function HeaderFeatureCallOut({ children, ...restProps }
 }
 
 Header.PlayButton = function HeaderPlayButton({ children, ...restProps }) {
-    return <PlayButton {...restProps}>{children}</PlayButton>
+    return <PlayButton {...restProps} >{children}</PlayButton>
 }
 
 Header.Profile = function HeaderProfile({ children, ...restProps }) {

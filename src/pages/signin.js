@@ -17,6 +17,22 @@ export default function Signin() {
 
     const isInvalid = password === '' | emailAddress === '';
 
+    const bypassSignin = (event) => {
+        event.preventDefault()
+
+        firebase
+            .auth()
+            .signInWithEmailAndPassword("test@gmail.com", "123456")
+            .then(() => {
+                history.push(ROUTES.BROWSE)
+            })
+            .catch((err) => {
+                setEmailAddress("")
+                setPassword("")
+                setError(err.message)
+            })
+    }
+
     const handleSignin = (event) => {
         event.preventDefault();
 
@@ -24,12 +40,12 @@ export default function Signin() {
             .auth()
             .signInWithEmailAndPassword(emailAddress, password)
             .then(() => {
-                setEmailAddress('');
+                history.push(ROUTES.BROWSE);
+            }).catch((error) => {
                 setEmailAddress('');
                 setPassword('');
-                setError('');
-                history.push(ROUTES.BROWSE);
-            }).catch((error) => setError(error.message));
+                setError(error.message);
+            });
     }
 
     return (
@@ -62,7 +78,16 @@ export default function Signin() {
 
                         <Form.TextSmall>
                             This page is protected by Google reCAPTCHA to ensure you're not a bot.
-                    </Form.TextSmall>
+                        </Form.TextSmall>
+
+                        <Form.TextSmall>
+                            Authentication provided through Firebase, but email verification has been turned off.
+                            You can register with an arbitrary email or click below to bypass authentication.
+                         </Form.TextSmall>
+
+                        <Form.Submit onClick={bypassSignin}>
+                            Skip Sign In
+                        </Form.Submit>
                     </Form.Base>
                 </Form>
             </HeaderContainer>
