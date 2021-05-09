@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Card, Header } from '../components';
+import Fuse from 'fuse.js';
+import { Card, Loading, Header, Player } from '../components';
+import * as ROUTES from '../constants/routes';
+import { FirebaseContext } from '../context/firebase';
 import { SelectProfileContainer } from './profiles';
 import { FooterContainer } from './footer';
-import Loading from '../components/loading';
-
-import * as ROUTES from '../constants/routes';
-
-import { FirebaseContext } from '../context/firebase';
 
 export function BrowseContainer({ slides }) {
-
-    const [profile, setProfile] = useState({});
     const [category, setCategory] = useState('series');
+    const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [slideRows, setSlideRows] = useState([]);
@@ -21,21 +18,33 @@ export function BrowseContainer({ slides }) {
     const user = {
         displayName: "David",
         photoURL: "1"
-    }
+    };
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 3000)
+        }, 3000);
     }, [user])
 
     useEffect(() => {
         setSlideRows(slides[category]);
-    }, [slides, category])
+    }, [slides, category]);
+
+    useEffect(() => {
+        const fuse = new Fuse(slideRows, { keys: ['data.description', 'data.title', 'data.genre'] });
+        const results = fuse.search(searchTerm).map(({ item }) => item);
+
+        if (slideRows.length > 0 && searchTerm.length > 3 && results.length > 0) {
+            setSlideRows(results);
+        } else {
+            setSlideRows(slides[category]);
+        }
+    }, [searchTerm])
 
     return profile.displayName ? (
         <>
             {loading ? <Loading src={user.photoURL} /> : <Loading.ReleaseBody />}
+
             <Header src="joker1" dontShowOnSmallViewPort>
                 <Header.Frame>
                     <Header.Group>
@@ -61,12 +70,14 @@ export function BrowseContainer({ slides }) {
                                     <Header.Link>{user.displayName}</Header.Link>
                                 </Header.Group>
                                 <Header.Group>
-                                    <Header.Link onClick={() => firebase.auth().signOut()}>Sign out</Header.Link>
+                                    <Header.Link onClick={() => firebase.auth().signOut()}>
+                                        Sign out</Header.Link>
                                 </Header.Group>
                             </Header.Dropdown>
                         </Header.Profile>
                     </Header.Group>
                 </Header.Frame>
+
                 <Header.Feature>
                     <Header.FeatureCallOut>Watch Joker Now</Header.FeatureCallOut>
                     <Header.Text>
@@ -94,13 +105,15 @@ export function BrowseContainer({ slides }) {
                             ))}
                         </Card.Entities>
                         <Card.Feature category={category}>
-                            <p>I am the feature!</p>
+                            <Player>
+                                <Player.Button />
+                                <Player.Video />
+                            </Player>
                         </Card.Feature>
                     </Card>
                 ))}
             </Card.Group>
-
             <FooterContainer />
-        </>
-    ) : (<SelectProfileContainer user={user} setProfile={setProfile} />)
+        </>)
+        : (<SelectProfileContainer user={user} setProfile={setProfile} />);
 }
